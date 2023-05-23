@@ -35,16 +35,16 @@ internal sealed class HttpConnectionsMetrics : IDisposable
         _meter = meterFactory.Create(MeterName);
 
         _currentConnectionsCounter = _meter.CreateUpDownCounter<long>(
-            "current-connections",
+            "http-server-current-connections",
             description: "Number of connections that are currently active on the server.");
 
         _connectionDuration = _meter.CreateHistogram<double>(
-            "connection-duration",
+            "http-server-connection-duration",
             unit: "s",
             description: "The duration of connections on the server.");
 
         _currentTransportsCounter = _meter.CreateUpDownCounter<long>(
-            "current-transports",
+            "http-server-current-transports",
             description: "Number of negotiated transports that are currently active on the server.");
     }
 

@@ -25,8 +25,8 @@ public class HostingMetricsTests
         var httpContext = new DefaultHttpContext();
         var meter = meterFactory.Meters.Single();
 
-        using var requestDurationRecorder = new InstrumentRecorder<double>(meterFactory, HostingMetrics.MeterName, "request-duration");
-        using var currentRequestsRecorder = new InstrumentRecorder<long>(meterFactory, HostingMetrics.MeterName, "current-requests");
+        using var requestDurationRecorder = new InstrumentRecorder<double>(meterFactory, HostingMetrics.MeterName, "http-server-request-duration");
+        using var currentRequestsRecorder = new InstrumentRecorder<long>(meterFactory, HostingMetrics.MeterName, "http-server-current-requests");
 
         // Act/Assert
         Assert.Equal(HostingMetrics.MeterName, meter.Name);
@@ -128,8 +128,8 @@ public class HostingMetricsTests
 
         await syncPoint.WaitForSyncPoint().DefaultTimeout();
 
-        using var requestDurationRecorder = new InstrumentRecorder<double>(meterFactory, HostingMetrics.MeterName, "request-duration");
-        using var currentRequestsRecorder = new InstrumentRecorder<long>(meterFactory, HostingMetrics.MeterName, "current-requests");
+        using var requestDurationRecorder = new InstrumentRecorder<double>(meterFactory, HostingMetrics.MeterName, "http-server-request-duration");
+        using var currentRequestsRecorder = new InstrumentRecorder<long>(meterFactory, HostingMetrics.MeterName, "http-server-current-requests");
         context1.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
 
         syncPoint.Continue();
@@ -150,8 +150,8 @@ public class HostingMetricsTests
         var httpContext = new DefaultHttpContext();
         var meter = meterFactory.Meters.Single();
 
-        using var requestDurationRecorder = new InstrumentRecorder<double>(meterFactory, HostingMetrics.MeterName, "request-duration");
-        using var currentRequestsRecorder = new InstrumentRecorder<long>(meterFactory, HostingMetrics.MeterName, "current-requests");
+        using var requestDurationRecorder = new InstrumentRecorder<double>(meterFactory, HostingMetrics.MeterName, "http-server-request-duration");
+        using var currentRequestsRecorder = new InstrumentRecorder<long>(meterFactory, HostingMetrics.MeterName, "http-server-current-requests");
 
         // Act/Assert
         Assert.Equal(HostingMetrics.MeterName, meter.Name);
