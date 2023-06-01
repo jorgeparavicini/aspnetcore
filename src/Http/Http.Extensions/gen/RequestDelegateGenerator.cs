@@ -83,9 +83,9 @@ public sealed class RequestDelegateGenerator : IIncrementalGenerator
                 codeWriter.WriteLine("var serviceProvider = options.ServiceProvider ?? options.EndpointBuilder.ApplicationServices;");
             }
             endpoint.EmitLoggingPreamble(codeWriter);
+            endpoint.EmitJsonPreparation(codeWriter);
             endpoint.EmitRouteOrQueryResolver(codeWriter);
             endpoint.EmitJsonBodyOrServiceResolver(codeWriter);
-            endpoint.Response?.EmitJsonPreparation(codeWriter);
             if (endpoint.NeedsParameterArray)
             {
                 codeWriter.WriteLine("var parameters = del.Method.GetParameters();");

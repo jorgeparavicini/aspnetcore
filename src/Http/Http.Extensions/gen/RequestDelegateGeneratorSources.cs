@@ -98,7 +98,7 @@ internal static class RequestDelegateGeneratorSources
 """;
 
     public static string TryResolveBodyAsyncMethod => """
-        private static async ValueTask<(bool, T?)> TryResolveBodyAsync<T>(HttpContext httpContext, LogOrThrowExceptionHelper logOrThrowExceptionHelper, bool allowEmpty, string parameterTypeName, string parameterName, bool isInferred = false)
+        private static async ValueTask<(bool, T?)> TryResolveBodyAsync<T>(HttpContext httpContext, LogOrThrowExceptionHelper logOrThrowExceptionHelper, bool allowEmpty, string parameterTypeName, string parameterName, JsonTypeInfo<T> jsonTypeInfo, bool isInferred = false)
         {
             var feature = httpContext.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature>();
 
@@ -112,7 +112,7 @@ internal static class RequestDelegateGeneratorSources
                 }
                 try
                 {
-                    var bodyValue = await httpContext.Request.ReadFromJsonAsync<T>();
+                    var bodyValue = await httpContext.Request.ReadFromJsonAsync(jsonTypeInfo);
                     if (!allowEmpty && bodyValue == null)
                     {
                         if (!isInferred)
@@ -247,7 +247,7 @@ internal static class RequestDelegateGeneratorSources
 """;
 
     public static string ResolveJsonBodyOrServiceMethod => """
-        private static Func<HttpContext, bool, ValueTask<(bool, T?)>> ResolveJsonBodyOrService<T>(LogOrThrowExceptionHelper logOrThrowExceptionHelper, string parameterTypeName, string parameterName, IServiceProviderIsService? serviceProviderIsService = null)
+        private static Func<HttpContext, bool, ValueTask<(bool, T?)>> ResolveJsonBodyOrService<T>(LogOrThrowExceptionHelper logOrThrowExceptionHelper, string parameterTypeName, string parameterName, JsonTypeInfo<T> jsonTypeInfo, IServiceProviderIsService? serviceProviderIsService = null)
         {
             if (serviceProviderIsService is not null)
             {
@@ -256,7 +256,7 @@ internal static class RequestDelegateGeneratorSources
                     return static (httpContext, isOptional) => new ValueTask<(bool, T?)>((true, httpContext.RequestServices.GetService<T>()));
                 }
             }
-            return (httpContext, isOptional) => TryResolveBodyAsync<T>(httpContext, logOrThrowExceptionHelper, isOptional, parameterTypeName, parameterName, isInferred: true);
+            return (httpContext, isOptional) => TryResolveBodyAsync<T>(httpContext, logOrThrowExceptionHelper, isOptional, parameterTypeName, parameterName, jsonTypeInfo, isInferred: true);
         }
 """;
 

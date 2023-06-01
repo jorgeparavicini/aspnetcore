@@ -112,6 +112,8 @@ namespace Microsoft.AspNetCore.Http.Generated
                     EndpointFilterDelegate? filteredInvocation = null;
                     var serviceProvider = options.ServiceProvider ?? options.EndpointBuilder.ApplicationServices;
                     var logOrThrowExceptionHelper = new LogOrThrowExceptionHelper(serviceProvider, options);
+                    var serializerOptions = serviceProvider?.GetService<IOptions<JsonOptions>>()?.Value.SerializerOptions ?? new JsonOptions().SerializerOptions;
+                    var todo_JsonTypeInfo =  (JsonTypeInfo<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo>)serializerOptions.GetTypeInfo(typeof(global::Microsoft.AspNetCore.Http.Generators.Tests.Todo));
 
                     if (options.EndpointBuilder.FilterFactories.Count > 0)
                     {
@@ -131,7 +133,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                     {
                         var wasParamCheckFailure = false;
                         // Endpoint Parameter: todo (Type = Microsoft.AspNetCore.Http.Generators.Tests.Todo, IsOptional = False, IsParsable = False, IsArray = False, Source = JsonBody)
-                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo>(httpContext, logOrThrowExceptionHelper, false, "Todo", "todo");
+                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo>(httpContext, logOrThrowExceptionHelper, false, "Todo", "todo",  todo_JsonTypeInfo);
                         var todo_local = todo_resolveBodyResult.Item2;
                         if (!todo_resolveBodyResult.Item1)
                         {
@@ -151,7 +153,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                     {
                         var wasParamCheckFailure = false;
                         // Endpoint Parameter: todo (Type = Microsoft.AspNetCore.Http.Generators.Tests.Todo, IsOptional = False, IsParsable = False, IsArray = False, Source = JsonBody)
-                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo>(httpContext, logOrThrowExceptionHelper, false, "Todo", "todo");
+                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo>(httpContext, logOrThrowExceptionHelper, false, "Todo", "todo",  todo_JsonTypeInfo);
                         var todo_local = todo_resolveBodyResult.Item2;
                         if (!todo_resolveBodyResult.Item1)
                         {
@@ -190,6 +192,8 @@ namespace Microsoft.AspNetCore.Http.Generated
                     EndpointFilterDelegate? filteredInvocation = null;
                     var serviceProvider = options.ServiceProvider ?? options.EndpointBuilder.ApplicationServices;
                     var logOrThrowExceptionHelper = new LogOrThrowExceptionHelper(serviceProvider, options);
+                    var serializerOptions = serviceProvider?.GetService<IOptions<JsonOptions>>()?.Value.SerializerOptions ?? new JsonOptions().SerializerOptions;
+                    var todo_JsonTypeInfo =  (JsonTypeInfo<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo?>)serializerOptions.GetTypeInfo(typeof(global::Microsoft.AspNetCore.Http.Generators.Tests.Todo));
 
                     if (options.EndpointBuilder.FilterFactories.Count > 0)
                     {
@@ -209,7 +213,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                     {
                         var wasParamCheckFailure = false;
                         // Endpoint Parameter: todo (Type = Microsoft.AspNetCore.Http.Generators.Tests.Todo?, IsOptional = True, IsParsable = False, IsArray = False, Source = JsonBody)
-                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo?>(httpContext, logOrThrowExceptionHelper, true, "Todo?", "todo");
+                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo?>(httpContext, logOrThrowExceptionHelper, true, "Todo?", "todo",  todo_JsonTypeInfo);
                         var todo_local = todo_resolveBodyResult.Item2;
                         if (!todo_resolveBodyResult.Item1)
                         {
@@ -229,7 +233,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                     {
                         var wasParamCheckFailure = false;
                         // Endpoint Parameter: todo (Type = Microsoft.AspNetCore.Http.Generators.Tests.Todo?, IsOptional = True, IsParsable = False, IsArray = False, Source = JsonBody)
-                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo?>(httpContext, logOrThrowExceptionHelper, true, "Todo?", "todo");
+                        var todo_resolveBodyResult = await GeneratedRouteBuilderExtensionsCore.TryResolveBodyAsync<global::Microsoft.AspNetCore.Http.Generators.Tests.Todo?>(httpContext, logOrThrowExceptionHelper, true, "Todo?", "todo",  todo_JsonTypeInfo);
                         var todo_local = todo_resolveBodyResult.Item2;
                         if (!todo_resolveBodyResult.Item1)
                         {
@@ -299,7 +303,7 @@ namespace Microsoft.AspNetCore.Http.Generated
             }
         }
 
-        private static async ValueTask<(bool, T?)> TryResolveBodyAsync<T>(HttpContext httpContext, LogOrThrowExceptionHelper logOrThrowExceptionHelper, bool allowEmpty, string parameterTypeName, string parameterName, bool isInferred = false)
+        private static async ValueTask<(bool, T?)> TryResolveBodyAsync<T>(HttpContext httpContext, LogOrThrowExceptionHelper logOrThrowExceptionHelper, bool allowEmpty, string parameterTypeName, string parameterName, JsonTypeInfo<T> jsonTypeInfo, bool isInferred = false)
         {
             var feature = httpContext.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature>();
 
@@ -313,7 +317,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                 }
                 try
                 {
-                    var bodyValue = await httpContext.Request.ReadFromJsonAsync<T>();
+                    var bodyValue = await httpContext.Request.ReadFromJsonAsync(jsonTypeInfo);
                     if (!allowEmpty && bodyValue == null)
                     {
                         if (!isInferred)

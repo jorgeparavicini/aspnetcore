@@ -111,7 +111,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                     EndpointFilterDelegate? filteredInvocation = null;
                     var serviceProvider = options.ServiceProvider ?? options.EndpointBuilder.ApplicationServices;
                     var serializerOptions = serviceProvider?.GetService<IOptions<JsonOptions>>()?.Value.SerializerOptions ?? new JsonOptions().SerializerOptions;
-                    var jsonTypeInfo =  (JsonTypeInfo<global::System.Int32>)serializerOptions.GetTypeInfo(typeof(global::System.Int32));
+                    var responseJsonTypeInfo =  (JsonTypeInfo<global::System.Int32>)serializerOptions.GetTypeInfo(typeof(global::System.Int32));
 
                     if (options.EndpointBuilder.FilterFactories.Count > 0)
                     {
@@ -142,7 +142,7 @@ namespace Microsoft.AspNetCore.Http.Generated
                         }
                         httpContext.Response.ContentType ??= "application/json";
                         var result = handler(p_local);
-                        return httpContext.Response.WriteAsJsonAsync(result, jsonTypeInfo);
+                        return httpContext.Response.WriteAsJsonAsync(result, responseJsonTypeInfo);
                     }
 
                     async Task RequestHandlerFiltered(HttpContext httpContext)
