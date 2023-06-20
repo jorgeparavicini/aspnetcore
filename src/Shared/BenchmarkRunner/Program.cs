@@ -18,8 +18,8 @@ namespace Microsoft.AspNetCore.BenchmarkDotNet.Runner;
 
 sealed partial class Program
 {
-    private static TextWriter _standardOutput;
-    private static StringBuilder _standardOutputText;
+    private static readonly TextWriter _standardOutput = Console.Out;
+    private static readonly StringBuilder _standardOutputText = new();
 
     static partial void BeforeMain(string[] args);
 
@@ -101,8 +101,6 @@ sealed partial class Program
 
     private static void SuppressConsole()
     {
-        _standardOutput = Console.Out;
-        _standardOutputText = new StringBuilder();
         Console.SetOut(new StringWriter(_standardOutputText));
     }
 }

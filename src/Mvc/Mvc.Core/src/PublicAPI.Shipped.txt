@@ -761,6 +761,16 @@ Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute
 Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.ActionFilterAttribute() -> void
 Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.Order.get -> int
 Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.Order.set -> void
+Microsoft.AspNetCore.Mvc.Filters.ControllerActionFilter
+Microsoft.AspNetCore.Mvc.Filters.ControllerActionFilter.ControllerActionFilter() -> void
+Microsoft.AspNetCore.Mvc.Filters.ControllerActionFilter.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext! context, Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate! next) -> System.Threading.Tasks.Task!
+Microsoft.AspNetCore.Mvc.Filters.ControllerActionFilter.Order.get -> int
+Microsoft.AspNetCore.Mvc.Filters.ControllerActionFilter.Order.set -> void
+Microsoft.AspNetCore.Mvc.Filters.ControllerResultFilter
+Microsoft.AspNetCore.Mvc.Filters.ControllerResultFilter.ControllerResultFilter() -> void
+Microsoft.AspNetCore.Mvc.Filters.ControllerResultFilter.OnResultExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! context, Microsoft.AspNetCore.Mvc.Filters.ResultExecutionDelegate! next) -> System.Threading.Tasks.Task!
+Microsoft.AspNetCore.Mvc.Filters.ControllerResultFilter.Order.get -> int
+Microsoft.AspNetCore.Mvc.Filters.ControllerResultFilter.Order.set -> void
 Microsoft.AspNetCore.Mvc.Filters.ExceptionFilterAttribute
 Microsoft.AspNetCore.Mvc.Filters.ExceptionFilterAttribute.ExceptionFilterAttribute() -> void
 Microsoft.AspNetCore.Mvc.Filters.ExceptionFilterAttribute.Order.get -> int
@@ -2231,6 +2241,7 @@ static Microsoft.Extensions.DependencyInjection.MvcCoreMvcCoreBuilderExtensions.
 static Microsoft.Extensions.DependencyInjection.MvcCoreMvcCoreBuilderExtensions.ConfigureApplicationPartManager(this Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder! builder, System.Action<Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartManager!>! setupAction) -> Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder!
 static Microsoft.Extensions.DependencyInjection.MvcCoreMvcCoreBuilderExtensions.SetCompatibilityVersion(this Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder! builder, Microsoft.AspNetCore.Mvc.CompatibilityVersion version) -> Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder!
 static Microsoft.Extensions.DependencyInjection.MvcCoreServiceCollectionExtensions.AddMvcCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder!
+static Microsoft.Extensions.DependencyInjection.MvcCoreServiceCollectionExtensions.AddMvcCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, bool includeActionDiscovery) -> Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder!
 static Microsoft.Extensions.DependencyInjection.MvcCoreServiceCollectionExtensions.AddMvcCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Microsoft.AspNetCore.Mvc.MvcOptions!>! setupAction) -> Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder!
 static readonly Microsoft.AspNetCore.Mvc.ActionConstraints.HttpMethodActionConstraint.HttpMethodConstraintOrder -> int
 static readonly Microsoft.AspNetCore.Mvc.ConsumesAttribute.ConsumesActionConstraintOrder -> int

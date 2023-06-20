@@ -8,6 +8,7 @@ using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
+using BenchmarkDotNet.Toolchains.InProcess.NoEmit;
 using BenchmarkDotNet.Validators;
 
 namespace BenchmarkDotNet.Attributes;
@@ -26,6 +27,10 @@ internal sealed class DefaultCoreProfileConfig : ManualConfig
         AddValidator(JitOptimizationsValidator.FailOnError);
 
         AddJob(Job.InProcess
-            .WithStrategy(RunStrategy.Throughput));
+            .WithToolchain(InProcessNoEmitToolchain.Instance)
+            .WithStrategy(RunStrategy.Throughput)
+            .WithLaunchCount(4)
+            .WithWarmupCount(50)
+            .WithIterationCount(200));
     }
 }

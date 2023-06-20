@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MvcStaticBenchmark": {
+      "commandName": "Project",
+      "commandLineArgs": "--config profile\r\n"
+    }
+  }
+}

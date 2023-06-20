@@ -45,6 +45,28 @@ public static class MvcCoreServiceCollectionExtensions
     /// <see cref="IMvcCoreBuilder"/> will be required.
     /// </remarks>
     public static IMvcCoreBuilder AddMvcCore(this IServiceCollection services)
+        => AddMvcCore(services, true);
+
+    /// <summary>
+    /// Adds the minimum essential MVC services excluding action discovery to the specified <see cref="IServiceCollection" />.
+    /// Additional services including MVC's support for authorization, formatters, and validation must be added
+    /// separately using the <see cref="IMvcCoreBuilder"/> returned from this method.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+    /// <param name="includeActionDiscovery">
+    /// Whether the services required for the action discovery should be registered.
+    /// </param>
+    /// <returns>An <see cref="IMvcCoreBuilder"/> that can be used to further configure the MVC services.</returns>
+    /// <remarks>
+    /// The <see cref="MvcCoreServiceCollectionExtensions.AddMvcCore(IServiceCollection)"/> approach for configuring
+    /// MVC is provided for experienced MVC developers who wish to have full control over the set of default services
+    /// registered. <see cref="MvcCoreServiceCollectionExtensions.AddMvcCore(IServiceCollection)"/> will register
+    /// the minimum set of services necessary to route requests and invoke controllers. It is not expected that any
+    /// application will satisfy its requirements with just a call to
+    /// <see cref="MvcCoreServiceCollectionExtensions.AddMvcCore(IServiceCollection)"/>. Additional configuration using the
+    /// <see cref="IMvcCoreBuilder"/> will be required.
+    /// </remarks>
+    public static IMvcCoreBuilder AddMvcCore(this IServiceCollection services, bool includeActionDiscovery)
     {
         ArgumentNullException.ThrowIfNull(services);
 
@@ -52,9 +74,12 @@ public static class MvcCoreServiceCollectionExtensions
         var partManager = GetApplicationPartManager(services, environment);
         services.TryAddSingleton(partManager);
 
-        ConfigureDefaultFeatureProviders(partManager);
+        if (includeActionDiscovery)
+        {
+            ConfigureDefaultFeatureProviders(partManager);
+        }
         ConfigureDefaultServices(services);
-        AddMvcCoreServices(services);
+        AddMvcCoreServices(services, includeActionDiscovery);
 
         var builder = new MvcCoreBuilder(services, partManager);
 
@@ -126,7 +151,7 @@ public static class MvcCoreServiceCollectionExtensions
     }
 
     // To enable unit testing
-    internal static void AddMvcCoreServices(IServiceCollection services)
+    internal static void AddMvcCoreServices(IServiceCollection services, bool includeActionDiscovery = true)
     {
         //
         // Options
@@ -144,13 +169,17 @@ public static class MvcCoreServiceCollectionExtensions
         // Action Discovery
         //
         // These are consumed only when creating action descriptors, then they can be deallocated
+        if (includeActionDiscovery)
+        {
+            services.TryAddEnumerable(
+                ServiceDescriptor.Transient<IApplicationModelProvider, DefaultApplicationModelProvider>());
+            services.TryAddEnumerable(
+                ServiceDescriptor.Transient<IApplicationModelProvider, ApiBehaviorApplicationModelProvider>());
+        }
+
         services.TryAddSingleton<ApplicationModelFactory>();
         services.TryAddEnumerable(
-            ServiceDescriptor.Transient<IApplicationModelProvider, DefaultApplicationModelProvider>());
-        services.TryAddEnumerable(
-            ServiceDescriptor.Transient<IApplicationModelProvider, ApiBehaviorApplicationModelProvider>());
-        services.TryAddEnumerable(
-            ServiceDescriptor.Transient<IActionDescriptorProvider, ControllerActionDescriptorProvider>());
+                ServiceDescriptor.Transient<IActionDescriptorProvider, ControllerActionDescriptorProvider>());
 
         services.TryAddSingleton<IActionDescriptorCollectionProvider, DefaultActionDescriptorCollectionProvider>();
 

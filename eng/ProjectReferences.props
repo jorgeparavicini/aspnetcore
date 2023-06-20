@@ -112,6 +112,7 @@
     <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.DataAnnotations" ProjectPath="$(RepoRoot)src\Mvc\Mvc.DataAnnotations\src\Microsoft.AspNetCore.Mvc.DataAnnotations.csproj" />
     <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.Formatters.Json" ProjectPath="$(RepoRoot)src\Mvc\Mvc.Formatters.Json\src\Microsoft.AspNetCore.Mvc.Formatters.Json.csproj" />
     <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" ProjectPath="$(RepoRoot)src\Mvc\Mvc.Formatters.Xml\src\Microsoft.AspNetCore.Mvc.Formatters.Xml.csproj" />
+    <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.Generators" ProjectPath="$(RepoRoot)src\Mvc\Mvc.Generators\src\Microsoft.AspNetCore.Mvc.Generators.csproj" />
     <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.Localization" ProjectPath="$(RepoRoot)src\Mvc\Mvc.Localization\src\Microsoft.AspNetCore.Mvc.Localization.csproj" />
     <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" ProjectPath="$(RepoRoot)src\Mvc\Mvc.NewtonsoftJson\src\Microsoft.AspNetCore.Mvc.NewtonsoftJson.csproj" />
     <ProjectReferenceProvider Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" ProjectPath="$(RepoRoot)src\Mvc\Mvc.Razor.RuntimeCompilation\src\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.csproj" />

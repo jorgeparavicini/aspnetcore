@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Debug Source Generator": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\samples\\MvcStaticBenchmark\\MvcStaticBenchmark.csproj"
+    }
+  }
+}
